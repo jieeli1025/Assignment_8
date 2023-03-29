@@ -27,7 +27,9 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -132,12 +134,14 @@ public class chatFragment extends Fragment {
                 String message = editText.getText().toString();
                 Chat newChat = new Chat(message);
                 LocalTime currentTime = LocalTime.now();
+                Date now = new Date();
+
                 db.collection("users")
                         .document("authenticatedUsers")
                         .collection("friends")
                         .document(email)
                         .collection("chat")
-                        .document(currentTime.toString())
+                        .document(now.toString()+currentTime.toString())
                         .set(newChat)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
